@@ -1,3 +1,56 @@
 body {
-  background-color: aqua;
+  // background: rgb(177, 238, 231);
+  // background: linear-gradient(
+  //   353deg,
+  //   rgba(177, 238, 231, 1) 10%,
+  //   rgba(83, 255, 238, 1) 31%,
+  //   rgba(255, 250, 131, 1) 60%,
+  //   rgba(249, 254, 98, 1) 100%,
+  //   rgba(17, 16, 18, 1) 343%
+  // );
+}
+
+@mixin general_form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  row-gap: 10px;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 0;
+      color: red;
+    }
+  }
+
+  input {
+    border-radius: 5px;
+    border: 3px solid grey;
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  &__button {
+    margin: 0 auto;
+    background-color: yellow;
+    width: 50%;
+    cursor: pointer;
+  }
+
+  &__button:hover {
+    background-color: green;
+    cursor: pointer;
+  }
+}
+
+
+@mixin general-green-button {
+  background-color: lightgreen;
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
 }
