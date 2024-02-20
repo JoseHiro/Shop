@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
-      # devise_for :users,
-      # controllers: {
-      #   sessions: 'api/v1/users/sessions',
-      # registrations: 'api/v1/users/registrations',
-    # }
     devise_for :users, path: '', path_names: {
       sign_in: 'login',
       sign_out: 'logout',
@@ -15,6 +10,9 @@ Rails.application.routes.draw do
       sessions: 'api/v1/users/sessions',
       registrations: 'api/v1/users/registrations',
     }
+
+    resources :products
+    resources :members, only: [:index]
   end
  end
 end
