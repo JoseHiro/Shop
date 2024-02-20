@@ -23,6 +23,17 @@ const Products = () => {
   } = useForm<Product>();
 
   const fetchProducts = async () => {
+    // await fetch("/api/v1/products", {
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((err) => {
+    //     console.log(`failed fetching ${err}`);
+    //   });
     await axios
       .get("/api/v1/products")
       .then((response) => {

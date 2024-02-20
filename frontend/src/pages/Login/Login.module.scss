@@ -1,0 +1,18 @@
+@import '../../index.scss';
+
+.form_container {
+  width: 100%;
+  display: flex;
+  // flex-direction: column;
+  justify-content: center;
+}
+
+.general_form {
+  @include general_form;
+}
+
+.errors_container {
+  p {
+    color: red;
+  }
+}
