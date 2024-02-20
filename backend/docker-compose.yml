@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: backend_development
+      # MYSQL_USER: ${DB_USER}
+      # MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "3307:3306"
+  web:
+    # 同じディレクトリにあるdockerFileを参照
+    build: .
+    # Railsのサーバーを起動している
+    # 立ち上げる毎にserver.pidのファイルを削除(エラー回避用)
+    command: bundle exec rails s -p 4000 -b '0.0.0.0'
+    volumes:
+      - .:/rails
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db

@@ -6,7 +6,6 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def show
-    puts 'Hello'
     render json: {status: "Success", product: @product}
   end
 

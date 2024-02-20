@@ -1,0 +1,17 @@
+.navbar_container {
+  // background-color: red;/
+  position: relative;
+  margin: 0;
+  padding: 0;
+  // position: absolute;
+  display: flex;
+  width: 100%;
+  border-bottom: 2px solid green;
+  align-items: center;
+
+  ul {
+    display: flex;
+    column-gap: 20px;
+    cursor: pointer;
+  }
+}
