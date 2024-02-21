@@ -6,67 +6,49 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   before_action :configure_sign_in_params, only: [:create]
   # skip_before_action :verify_authenticity_token
 
-  # GET /resource/sign_in
-  def new
-    super
-  end
-
-
   # POST /resource/sign_in
-
-  # def create
-  #   puts 'helloooooo'
-  #   super
-  # end
 
   def create
     user = User.find_by(email: login_params[:email])
     if user && user.valid_password?(login_params[:password])
       sign_in(user)
-      # user.generate_authentication_token!
-      # @current_user = user
-      render json: { user: user.attributes.except('password', 'password_confirmation'), status: 200},
-      status: 200
+      render json: { user: user.attributes.except('password', 'password_confirmation'), messsage: 'Logged in successfully', status: 200 },
+             status: 200
     else
-      render json: {message: "Error, Unauthorized", status: 401},
+      render json: { message: 'Error, Unauthorized', status: 401 },
              status: :unauthorized
     end
   end
-  # def create
-  #   super do |user|
-  #     if user.persisted?
-  #       render json: { status: 'Success', message: 'Logged in' }
-  #     else
-  #       puts 'User not persisted'
-  #       render json: { status: 'Failed', message: 'Unsuccessful login' }
-  #     end
-  #   end
-  # end
 
   # DELETE /resource/sign_out
   def destroy
-  user = current_api_v1_user
-  sign_out(current_api_v1_user)
-  render json: { status: 200, message: "Logged out successfully", user: user }, status: :ok
+    # user = current_api_v1_user
+    sign_out(current_api_v1_user)
+    if current_api_v1_user.nil?
+      render json: { message: 'Successfully logged out', status: 200 }
+    else
+      render json: { message: 'Failed to logout', status: 400 }
+    end
   end
 
   # protected
 
   private
+
   def login_params
     params.require(:user).permit(:email, :password)
   end
 
   # # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_in_params
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password])
+    devise_parameter_sanitizer.permit(:sign_in, keys: %i[email password])
   end
 
   def respond_with(resource, _opts = {})
     render json: {
       status: {
         code: 200,
-        message: "Logged in successfully"
+        message: 'Logged in successfully'
       },
       data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
     }

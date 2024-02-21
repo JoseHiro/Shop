@@ -1,0 +1,7 @@
+・Update
+When you update password, devise automatically sign outs, to fix this you can
+avoid including password in the request
+change the config sign_in_after_reset_password into true
+in the update method, sign_in :user, @user, bypass: true to force sign in
+
+

@@ -1,21 +1,23 @@
 class Api::V1::ProductsController < ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :set_product, only: [:show]
+
   def index
-    @products = Product.all
-    render json: { status: 'SUCCESS', products: @products}
+    @products = current_api_v1_user.products
+    render json: { status: 'SUCCESS', products: @products }
   end
 
   def show
-    render json: {status: "Success", product: @product}
+    render json: { status: 'Success', product: @product }
   end
 
   def create
     product = Product.new(product_params)
+    product.author = current_api_v1_user
     if product.save
-    render json: {status: 'Success'}
+      render json: { status: 'Success', product: }
     else
-      render json: {status: "Failed"}
+      render json: { status: 'Failed' }
     end
   end
 
