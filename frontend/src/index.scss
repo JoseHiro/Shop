@@ -33,15 +33,16 @@ ul {
 
   input {
     border-radius: 5px;
-    border: 3px solid grey;
-    font-size: 18px;
-    padding: 10px;
+    border: 1px solid lightgrey;
+    font-size: 15px;
+    padding: 12px;
   }
 
   &__button {
     margin: 0 auto;
-    background-color: yellow;
-    width: 50%;
+    background-color: #2ABFAB;
+    width: 100%;
+    border: none !important;
     cursor: pointer;
   }
 

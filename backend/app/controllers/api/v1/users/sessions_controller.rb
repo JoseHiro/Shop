@@ -6,8 +6,6 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
   before_action :configure_sign_in_params, only: [:create]
   # skip_before_action :verify_authenticity_token
 
-  # POST /resource/sign_in
-
   def create
     user = User.find_by(email: login_params[:email])
     if user && user.valid_password?(login_params[:password])
@@ -20,9 +18,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
     end
   end
 
-  # DELETE /resource/sign_out
   def destroy
-    # user = current_api_v1_user
     sign_out(current_api_v1_user)
     if current_api_v1_user.nil?
       render json: { message: 'Successfully logged out', status: 200 }
@@ -30,8 +26,6 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
       render json: { message: 'Failed to logout', status: 400 }
     end
   end
-
-  # protected
 
   private
 

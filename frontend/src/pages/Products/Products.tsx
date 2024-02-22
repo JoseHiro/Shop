@@ -5,15 +5,21 @@ import axios from "axios";
 
 import styles from "./Products.module.scss";
 
-type Product = {
+interface Product {
   id: number;
   name: string;
   price: number;
   amount: number;
+  images: Image[];
+}
+
+type Image = {
+  img_url: string;
 };
 
 const Products = () => {
   const [products, setProducts] = useState<Product[] | []>([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -23,17 +29,6 @@ const Products = () => {
   } = useForm<Product>();
 
   const fetchProducts = async () => {
-    // await fetch("/api/v1/products", {
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((err) => {
-    //     console.log(`failed fetching ${err}`);
-    //   });
     await axios
       .get("/api/v1/products")
       .then((response) => {
@@ -70,12 +65,21 @@ const Products = () => {
 
   return (
     <div>
-      <nav>Navbar</nav>
-      {products.length > 0 ? (
+      {!loading && products.length > 0 ? (
         <div className={styles.products_list}>
           {products.map((data, index) => {
             return (
               <div key={index} onClick={() => navigate(`/product/${data.id}`)}>
+                {data.images.length > 0 ? (
+                  <img alt="" src={data.images[0].img_url} />
+                ) : (
+                  <img
+                    alt=""
+                    src={
+                      "https://sesupport.edumall.jp/hc/article_attachments/900009570963/noImage.jpg"
+                    }
+                  />
+                )}
                 <h3>{data.name}</h3>
                 <h3>{data.price}</h3>
                 <h3>{data.amount}</h3>
@@ -84,10 +88,11 @@ const Products = () => {
           })}
         </div>
       ) : (
-        <h3>Loading...</h3>
+        <h3>No products</h3>
       )}
+      {loading && <h3>Loading</h3>}
 
-      <form
+      {/* <form
         onSubmit={handleSubmit(handleAddNewProduct)}
         className={styles.general_form}
       >
@@ -140,7 +145,7 @@ const Products = () => {
           type="submit"
           value="Submit"
         />
-      </form>
+      </form> */}
     </div>
   );
 };

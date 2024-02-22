@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_221_005_751) do
+ActiveRecord::Schema[7.1].define(version: 20_240_222_010_956) do
+  create_table 'images', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'img_url'
+    t.bigint 'product_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['product_id'], name: 'index_images_on_product_id'
+  end
+
   create_table 'products', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name'
     t.integer 'price'
@@ -36,5 +44,6 @@ ActiveRecord::Schema[7.1].define(version: 20_240_221_005_751) do
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
+  add_foreign_key 'images', 'products'
   add_foreign_key 'products', 'users'
 end

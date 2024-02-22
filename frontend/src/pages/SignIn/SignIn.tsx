@@ -5,9 +5,11 @@ import axios from "axios";
 import styles from "./Signin.module.scss";
 
 type Form = {
+  name: string;
   email: string;
   password: string;
 };
+
 const SignIn = () => {
   const {
     handleSubmit,
@@ -17,11 +19,11 @@ const SignIn = () => {
   } = useForm<Form>();
 
   const handleSignIn = async (data: Form) => {
-    const { email, password } = data;
+    const { name, email, password } = data;
     if (email && password) {
       await axios
-        .post("/api/v1/users", {
-          user: { email, password },
+        .post("/api/v1/signup", {
+          user: { name, email, password },
         })
         .then((result) => {
           console.log("success");
@@ -40,7 +42,20 @@ const SignIn = () => {
       >
         <h3>Create account</h3>
         <input
+          placeholder="Username"
+          id="name"
+          {...register("name", {
+            required: { value: true, message: "This filed is required" },
+          })}
+        />
+        {errors.name && (
+          <div className={styles.errors_container}>
+            <p>{errors.name.message}</p>
+          </div>
+        )}
+        <input
           id="email"
+          placeholder="Email"
           {...register("email", {
             required: { value: true, message: "This filed is required" },
           })}
@@ -53,6 +68,7 @@ const SignIn = () => {
 
         <input
           id="password"
+          placeholder="Password"
           {...register("password", {
             required: { value: true, message: "This filed is required" },
           })}

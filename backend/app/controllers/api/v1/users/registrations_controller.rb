@@ -8,7 +8,6 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   # , if: -> { controller_name == 'sessions' && action_name == 'create' }
   # before_action :configure_account_update_params, only: [:update]
 
-  # POST /resource
   def create
     super do |user|
       if user.persisted?
@@ -40,8 +39,8 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     user = current_api_v1_user
     user.destroy
     if user.destroyed?
-      cookies.delete :sessionId
-      session.delete :sessionId
+      # cookies.delete :sessionId
+      # session.delete :sessionId
       # cookies[:hoge] = { value: 'piyo', http_only: true, secure: true }
       render json: {
         status: 200,

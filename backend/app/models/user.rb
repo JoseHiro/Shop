@@ -10,5 +10,5 @@ class User < ApplicationRecord
   #   email = conditions.delete(:email)
   #   where(conditions.to_h).where(["lower(email) = :value", { :value => email.downcase }]).first
   # end
-  has_many :products
+  has_many :products, dependent: :delete_all
 end
