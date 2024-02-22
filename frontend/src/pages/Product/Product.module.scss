@@ -1,4 +1,4 @@
-@import '../../index.scss';
+@import "../../index.scss";
 .product_container {
   display: flex;
   margin: 50px 50px;
@@ -6,18 +6,18 @@
   .img_container {
     width: 500px;
     .selected_img {
+      object-fit: cover;
       width: 500px;
       height: 500px;
-      background-color: lightgreen;
     }
 
     .sub_img {
-      cursor: pointer;
-      margin: 10px 0;
-      display: flex;
-      column-gap: 10px;
-      justify-content: space-around;
-      div {
+        cursor: pointer;
+        margin: 10px 0;
+        display: flex;
+        column-gap: 10px;
+        justify-content: space-around;
+      img {
         background-color: lightgray;
         border-radius: 8px;
         width: 100px;

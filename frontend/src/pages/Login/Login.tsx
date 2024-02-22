@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import styles from "./Login.module.scss";
@@ -10,6 +11,7 @@ type Form = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -20,17 +22,19 @@ const Login = () => {
     const { email, password } = data;
     if (email && password) {
       await axios
-        .post("/api/v1/users/sign_in", {
+        .post("/api/v1/login", {
           user: { email, password },
         })
         .then((result) => {
           console.log("success");
+          navigate("/cart");
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
+
   return (
     <div className={styles.form_container}>
       <form
@@ -39,6 +43,7 @@ const Login = () => {
       >
         <h3>Login to account</h3>
         <input
+          placeholder="Email"
           id="email"
           {...register("email", {
             required: { value: true, message: "This filed is required" },
@@ -51,7 +56,9 @@ const Login = () => {
         )}
 
         <input
+          placeholder="Password"
           id="password"
+          type="password"
           {...register("password", {
             required: { value: true, message: "This filed is required" },
           })}

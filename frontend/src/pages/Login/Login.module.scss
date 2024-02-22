@@ -1,14 +1,15 @@
 @import '../../index.scss';
 
 .form_container {
+  height: 100vh;
   width: 100%;
   display: flex;
-  // flex-direction: column;
   justify-content: center;
 }
 
 .general_form {
   @include general_form;
+  margin: 100px;
 }
 
 .errors_container {

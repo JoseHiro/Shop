@@ -1,33 +1,21 @@
 class Api::V1::ProductsController < ApplicationController
-  before_action :authenticate_api_v1_user!
   before_action :set_product, only: [:show]
 
   def index
-    @products = current_api_v1_user.products
-    render json: { status: 'SUCCESS', products: @products }
+    @products = Product.all
+    render json: { message: 'Successfully fetched products', status: 200,
+                   products: @products.as_json(include: :images) }
   end
 
   def show
-    render json: { status: 'Success', product: @product }
-  end
-
-  def create
-    product = Product.new(product_params)
-    product.author = current_api_v1_user
-    if product.save
-      render json: { status: 'Success', product: }
-    else
-      render json: { status: 'Failed' }
-    end
+    render json: { message: 'Successfully found product', status: 200, product: @product.as_json(include: :images) }
   end
 
   private
 
   def set_product
     @product = Product.find(params[:id])
-  end
-
-  def product_params
-    params.require(:product).permit(:name, :amount, :price)
+  rescue ActiveRecord::RecordNotFound
+    render json: { message: 'Failed to find product', status: 400 }
   end
 end

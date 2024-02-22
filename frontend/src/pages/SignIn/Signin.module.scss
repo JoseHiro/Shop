@@ -4,11 +4,13 @@
   width: 100%;
   display: flex;
   // flex-direction: column;
+  height: 100vh;
   justify-content: center;
 }
 
 .general_form {
   @include general_form;
+  margin: 100px;
 }
 
 .errors_container {

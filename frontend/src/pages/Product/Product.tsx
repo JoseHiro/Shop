@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import styles from "./Product.module.scss";
 
+type Image = {
+  img_url: string;
+};
 const Product = () => {
   const [product, setProduct] = useState<any | null>(null);
   const { id } = useParams();
@@ -31,13 +34,33 @@ const Product = () => {
       {product ? (
         <div className={styles.product_container}>
           <div className={styles.img_container}>
-            <div className={styles.selected_img}>Img</div>
-            <div className={styles.sub_img}>
-              <div>img</div>
-              <div>img</div>
-              <div>img</div>
-              <div>img</div>
-            </div>
+            {product.images.length > 0 ? (
+              <Fragment>
+                <img
+                  className={styles.selected_img}
+                  alt=""
+                  src={product.images[0].img_url}
+                />
+                <div className={styles.sub_img}>
+                  {product.images.map((data: Image, index: any) => {
+                    return (
+                      <img
+                        className={styles.selected_img}
+                        alt=""
+                        src={data.img_url}
+                      />
+                    );
+                  })}
+                </div>
+              </Fragment>
+            ) : (
+              <img
+                alt=""
+                src={
+                  "https://sesupport.edumall.jp/hc/article_attachments/900009570963/noImage.jpg"
+                }
+              />
+            )}
           </div>
 
           <div className={styles.description_container}>
